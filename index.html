@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PaLM Chat</title>
+</head>
+<body>
+  <h1>Text Generation App</h1>
+  <form action="/generate" method="post">
+    <label for="prompt">Enter your prompt:</label>
+    <input type="text" id="prompt" name="prompt" required>
+    <button type="submit">Generate Text</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    const form = document.querySelector('form');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const response = await fetch('/generate', {
+        method: 'POST',
+        body: formData,
+      });
+      const result = await response.json();
+      resultDiv.textContent = JSON.stringify(result, null, 2);
+    });
+  </script>
+</body>
+</html>
